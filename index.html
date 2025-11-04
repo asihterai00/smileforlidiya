@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smile for Lidiya - Support Her Journey with Cleft Lip and Palate Care</title>
+    <meta name="description" content="Help baby Lidiya Safira Miyuki with accommodations, care, equipment, and potential future surgeries.">
+    <!-- 
+      PENTING: Ganti 'YOUR_PAYPAL_CLIENT_ID' dengan Client ID PayPal Anda yang sebenarnya.
+    -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 40px auto;
+        }
+        @media (max-width: 968px) {
+            .campaign-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static !important;
+            }
+        }
+        .main-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        .donation-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        .image-gallery {
+            position: relative;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .image-gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.95);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .gallery-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .gallery-nav.prev { left: 15px; }
+        .gallery-nav.next { right: 15px; }
+        .gallery-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 8px;
+            padding: 0 15px;
+            justify-content: center;
+        }
+        .indicator {
+            width: 40px;
+            height: 4px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .indicator.active {
+            background: white;
+            width: 60px;
+        }
+        .progress-bar-container {
+            margin: 25px 0;
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+        .raised-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .goal-amount {
+            font-size: 16px;
+            color: #6c757d;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 1s ease;
+        }
+        .donor-count {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .donor-count strong {
+            font-size: 24px;
+            color: #667eea;
+            display: block;
+        }
+        .preset-amounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .preset-btn {
+            padding: 14px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            color: #495057;
+        }
+        .preset-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+        .preset-btn.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+        .custom-amount {
+            width: 100%;
+            padding: 14px;
+            margin: 15px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .custom-amount:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        #paypal-button-container {
+            margin: 20px 0;
+        }
+        .trust-badge {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #0066cc;
+        }
+        .story-content {
+            font-size: 17px;
+            line-height: 1.8;
+        }
+        .story-content p {
+            margin: 20px 0;
+        }
+        .story-content strong {
+            color: #667eea;
+        }
+        .story-image {
+            margin: 40px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        .story-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+            border-left: 4px solid #dc3545;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .highlight-box h3 {
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+        .organizer-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .organizer-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .organizer-info h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        .organizer-info p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .verification-badge {
+            background: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .share-button {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .share-button:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: white;
+            padding: 40px;
+            margin-top: 60px;
+            text-align: center;
+            border-radius: 16px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+        .footer-info {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #6c757d;
+            line-height: 1.8;
+        }
+        .mobile-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .mobile-donate-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .mobile-cta {
+                display: block;
+            }
+            .container {
+                padding: 10px;
+            }
+            .main-content {
+                padding: 25px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .preset-amounts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .info-notice {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        .info-notice h4 {
+            color: #b8860b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="tags">
+                <span class="tag">👶 Baby</span>
+                <span class="tag">🏥 Medical</span>
+            </div>
+            <h1>Smile for Lidiya: Support Her Journey</h1>
+            <p>Accommodations, Care, Routine Speech Therapy, Equipment, and Future Surgeries for a Brighter Smile</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="campaign-grid">
+            <div class="main-content">
+                <div class="image-gallery">
+                    <div class="gallery-indicators" id="indicators"></div>
+                    <img id="mainImage" src="https://res.cloudinary.com/dmajhtvmd/image/upload/w_1000,c_scale/q_auto/qunmohzsmp3twggtdewl.jpg" alt="Lidiya Safira Miyuki">
+                    <button class="gallery-nav prev" onclick="prevImage()">‹</button>
+                    <button class="gallery-nav next" onclick="nextImage()">›</button>
+                </div>
+                <div class="story-content">
+                    <h2 style="color: #667eea; margin-bottom: 20px;">About Lidiya</h2>
+                    
+                    <p>My name is <strong>Tias Adiyatna</strong>, and I am the father of <strong>Lidiya Safira Miyuki</strong>, our first and only daughter. She was born with cleft lip and cleft palate, which makes it difficult for her to eat, speak, and breathe normally.</p>
+                    <div class="story-image">
+                        <img src="https://res.cloudinary.com/dmajhtvmd/image/upload/w_1200,c_scale/f_auto/dpr_auto/gs4oy2tou11xx40tpf8c" alt="Lidiya with family">
+                    </div>
+                    <p>Every day, our hearts ache watching her little struggles just to drink milk or try to smile like other babies. When the doctor confirmed her diagnosis after birth, we were devastated. But we know this is a test, and we must stay strong for Lidiya.</p>
+                    <div class="highlight-box">
+                        <h3>Our Journey So Far</h3>
+                        <p>For the past several months, our lives have revolved around hospital visits, consultations with doctors, and searching for ways to support her. We have already completed her first surgery, and we are now preparing for the second. The first and second surgeries are covered by national health insurance, similar to public health coverage programs abroad like Medicaid or NHS.</p>
+                        <p>However, the ongoing costs for transportation, routine check-ups, medications, and special feeding equipment have drained our savings. Even though my wife and I work and sell goods on weekends and after hours, it's challenging to keep up.</p>
+                    </div>
+                    <div class="story-image">
+                        <img src="https://res.cloudinary.com/dmajhtvmd/image/upload/w_1200,c_scale/f_auto/dpr_auto/dnvvaycz19xxp3mbsane" alt="Hospital visits">
+                    </div>
+                    <p>We have borrowed from friends and family and taken out loans, but we still need support for the road ahead.</p>
+                    <div class="story-image">
+                        <img src="https://res.cloudinary.com/dmajhtvmd/image/upload/w_1200,c_scale/f_auto/dpr_auto/g9qfs8gsihdpofnoggfe" alt="Family support">
+                    </div>
+                    <h3 style="color: #667eea; margin-top: 40px; margin-bottom: 15px;">Why We Need Support</h3>
+                    
+                    <p>Lidiya has already undergone her first surgery (labiocheiloplasty - cleft lip repair), and we are heading toward the second (palatoplasty - cleft palate repair). After the second surgery, future procedures—such as a third or fourth surgery that may be needed as she grows—will not be covered by insurance and must be paid out-of-pocket.</p>
+                    <p>This campaign is not to force or pressure anyone into donating; it's entirely voluntary. Any help is appreciated from the heart. The funds will primarily go toward:</p>
+                    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+                        <li>Accommodations during hospital stays</li>
+                        <li>Ongoing care and rehabilitation</li>
+                        <li>Special medical equipment and tools</li>
+                        <li>Routine weekly speech therapy after the second surgery</li>
+                        <li>Potential third or fourth surgeries in the future</li>
+                    </ul>
+                    <p>Without adequate support, Lidiya may continue to face:</p>
+                    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+                        <li>Challenges with eating and drinking</li>
+                        <li>Risk of malnutrition and delayed growth</li>
+                        <li>Breathing difficulties</li>
+                        <li>Future speech issues</li>
+                        <li>Recurring infections</li>
+                        <li>Social and emotional challenges</li>
+                    </ul>
+                    <div class="story-image">
+                        <img src="https://res.cloudinary.com/dmajhtvmd/image/upload/w_1200,c_scale/f_auto/dpr_auto/ayesfoecokhkrhxk2i8" alt="Lidiya needs help">
+                    </div>
+                    <h3 style="color: #667eea; margin-top: 40px; margin-bottom: 15px;">Estimated Costs</h3>
+                    
+                    <p>The total estimated need for accommodations, care, equipment, and future surgeries is approximately <strong>USD $15,000</strong>. This includes:</p>
+                    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+                        <li>Travel and lodging during treatments</li>
+                        <li>Post-operative care and therapy</li>
+                        <li>Routine weekly speech therapy</li>
+                        <li>Medications and specialized equipment</li>
+                        <li>Future uncovered surgeries and rehabilitation</li>
+                    </ul>
+                    <p>We don't have the exact total yet, but this amount will help cover the essential ongoing and future needs.</p>
+                    <div class="info-notice">
+                        <h4>💖 A Father's Humble Request</h4>
+                        <p>As a father, I feel saddened that I can't provide everything my daughter needs on my own. I've tried every possible way, but today, I humbly share our story. If you feel moved to help voluntarily, it would mean the world to us.</p>
+                        <p style="margin-top: 10px;"><strong>We appreciate any support, but please know it's entirely up to you.</strong></p>
+                    </div>
+                    <h3 style="color: #667eea; margin-top: 40px; margin-bottom: 15px;">How You Can Help</h3>
+                    
+                    <p><strong>If you'd like to contribute voluntarily, please consider supporting Lidiya's care and future needs.</strong> Help her continue to smile without pain and grow healthily.</p>
+                    <p>No amount is too small if given from the heart. Every voluntary donation brings us closer to securing her ongoing treatment.</p>
+                    <p><strong>If donating isn't possible, other ways to help include:</strong></p>
+                    <ul style="margin: 20px 0 20px 30px; line-height: 2;">
+                        <li>Sharing this campaign on social media</li>
+                        <li>Telling Lidiya's story to friends and family</li>
+                        <li>Keeping Lidiya in your thoughts and prayers</li>
+                        <li>Helping find job opportunities or online freelance work, such as data entry, for the family</li>
+                    </ul>
+                    <p>If anyone can assist with job leads or remote freelance opportunities like data input or similar tasks, please reach out—we'd be grateful.</p>
+                    <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 30px; border-radius: 12px; margin: 40px 0; text-align: center;">
+                        <p style="font-size: 20px; font-weight: 600; color: #1976d2; margin-bottom: 15px;">✨ Your Support Means Everything ✨</p>
+                        <p style="color: #424242;">All funds will be <strong>used directly</strong> for Lidiya's accommodations, care, equipment, and future surgeries. We commit to transparency with regular updates.</p>
+                    </div>
+                    <p>Thank you for reading Lidiya's story and considering any voluntary help. May God bless you for your kindness. 🙏</p>
+                    <p style="margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 12px; text-align: center;">
+                        <strong style="font-size: 20px; color: #667eea; display: block; margin-bottom: 10px;">With deep gratitude and hope,</strong>
+                        <strong style="font-size: 18px; display: block; margin: 5px 0;">Tias Adiyatna</strong>
+                        <span style="color: #6c757d;">Father of Lidiya Safira Miyuki</span>
+                    </p>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="donation-card">
+                    <div class="progress-bar-container">
+                        <div class="progress-stats">
+                            <div>
+                                <div class="raised-amount">$0</div>
+                                <div style="font-size: 14px; color: #6c757d; margin-top: 5px;">Raised</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="goal-amount">Goal</div>
+                                <div style="font-weight: 600; color: #495057; margin-top: 5px;">$15,000</div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="donor-count">
+                            <strong id="donorCount">0</strong>
+                            <span style="color: #6c757d;">Donors</span>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #6c757d; margin: 20px 0; font-size: 15px;">
+                        <strong>Be the first to support voluntarily!</strong><br>
+                        Your contribution, if you choose to give, means the world
+                    </p>
+                    <div class="preset-amounts">
+                        <button class="preset-btn" data-amount="25">$25</button>
+                        <button class="preset-btn" data-amount="50">$50</button>
+                        <button class="preset-btn" data-amount="100">$100</button>
+                        <button class="preset-btn" data-amount="250">$250</button>
+                        <button class="preset-btn" data-amount="500">$500</button>
+                        <button class="preset-btn" data-amount="1000">$1,000</button>
+                    </div>
+                    <input type="number"
+                           id="customAmount"
+                           class="custom-amount"
+                           placeholder="Or enter a custom amount (USD)"
+                           min="1">
+                    <div id="paypal-button-container"></div>
+                    <div class="trust-badge">
+                        <span style="font-size: 20px;">🛡️</span>
+                        <div>
+                            <strong>Secure Transaction</strong><br>
+                            <span style="font-size: 12px;">Payments are protected by PayPal</span>
+                        </div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 13px; color: #6c757d; text-align: center;">
+                        Donations go directly to the family's account for Lidiya's care costs.
+                    </div>
+                </div>
+                <div class="organizer-card">
+                    <img src="https://res.cloudinary.com/dmajhtvmd/image/upload/w_300,c_scale/q_auto/avirzvdz3hlgcl7hbxck.jpg" alt="Tias Adiyatna" class="organizer-avatar">
+                    <div class="organizer-info">
+                        <h4>Tias Adiyatna</h4>
+                        <p>Campaign Organizer</p>
+                        <p style="font-size: 13px; margin-top: 5px;">Father of Lidiya Safira Miyuki</p>
+                        <span class="verification-badge">✓ Verified</span>
+                    </div>
+                </div>
+                <div class="donation-card">
+                    <h3 style="margin-bottom: 15px; color: #667eea;">📢 Share This Campaign</h3>
+                    <p style="font-size: 14px; color: #6c757d; margin-bottom: 15px;">Help spread the word about Lidiya's journey</p>
+                    <div class="share-buttons">
+                        <button class="share-button" onclick="shareOnFacebook()">
+                            <span>📘</span> Facebook
+                        </button>
+                        <button class="share-button" onclick="shareOnTwitter()">
+                            <span>🐦</span> Twitter
+                        </button>
+                        <button class="share-button" onclick="shareOnWhatsApp()">
+                            <span>💬</span> WhatsApp
+                        </button>
+                    </div>
+                    <button class="share-button" onclick="copyLink()" style="margin-top: 10px;">
+                        <span>🔗</span> Copy Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-cta">
+        <button class="mobile-donate-btn" onclick="document.querySelector('.donation-card').scrollIntoView({behavior: 'smooth'})">
+            💝 SUPPORT NOW
+        </button>
+    </div>
+    <div class="footer">
+        <div class="footer-info">
+            <h3 style="color: #667eea; margin-bottom: 20px;">About This Campaign</h3>
+            <p>This is a personal fundraising campaign organized by the family of Lidiya Safira Miyuki. All funds will be used entirely for her accommodations, care, equipment, and future medical needs.</p>
+            <p style="margin-top: 15px;">Payments are processed securely through PayPal, one of the world's most trusted online payment platforms.</p>
+            <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e9ecef;">
+                <p style="font-size: 14px; color: #6c757d;">
+                    © 2025 Smile for Lidiya Campaign<br>
+                    Managed with full trust and transparency by the family
+                </p>
+                <p style="margin-top: 15px; font-size: 13px; color: #adb5bd;">
+                    🙏 May God bless you for your kindness 🙏
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Image Gallery
+        const images = [
+            "https://res.cloudinary.com/dmajhtvmd/image/upload/w_1000,c_scale/q_auto/qunmohzsmp3twggtdewl.jpg",
+            "https://res.cloudinary.com/dmajhtvmd/image/upload/w_1000,c_scale/q_auto/ra3zgwsjtincqmhfsgt2.jpg",
+            "https://res.cloudinary.com/dmajhtvmd/image/upload/w_1000,c_scale/q_auto/wsgmidftbkwfhl9hkskw.jpg",
+            "https://res.cloudinary.com/dmajhtvmd/image/upload/w_1000,c_scale/q_auto/bf5nxydoscbz7wjvgh.jpg"
+        ];
+        let currentIndex = 0;
+        let autoPlayInterval;
+        let selectedAmount = 50; // Default amount in USD
+        // Initialize indicators
+        function initIndicators() {
+            const indicatorsContainer = document.getElementById('indicators');
+            images.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.onclick = () => goToImage(index);
+                indicatorsContainer.appendChild(indicator);
+            });
+        }
+        function updateImage() {
+            document.getElementById('mainImage').src = images[currentIndex];
+            updateIndicators();
+        }
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+        }
+        function goToImage(index) {
+            currentIndex = index;
+            updateImage();
+            resetAutoPlay();
+        }
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage();
+            resetAutoPlay();
+        }
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage();
+            resetAutoPlay();
+        }
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextImage, 5000);
+        }
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            startAutoPlay();
+        }
+        // Preset amount buttons
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedAmount = parseFloat(btn.dataset.amount);
+                document.getElementById('customAmount').value = '';
+            });
+        });
+        // Custom amount input
+        document.getElementById('customAmount').addEventListener('input', function() {
+            const custom = parseFloat(this.value);
+            if (custom && custom > 0) {
+                selectedAmount = custom;
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+            }
+        });
+        // PayPal Integration
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'blue',
+                layout: 'vertical',
+                label: 'donate',
+                height: 45
+            },
+            createOrder: function(data, actions) {
+                const amount = selectedAmount || 50; // Fallback to 50 USD
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: amount.toFixed(2),
+                            currency_code: 'USD' // Changed to USD
+                        },
+                        description: 'Support for Lidiya Safira Miyuki\'s Care and Future Surgeries',
+                        custom_id: 'LIDIYA_' + Date.now()
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Success message
+                    const name = details.payer.name.given_name || 'Donor';
+                    const amount = details.purchase_units[0].amount.value;
+                    
+                    alert(
+                        '✅ Thank you, ' + name + '!\n\n' +
+                        'Your voluntary donation of $' + amount + ' (USD) has been processed successfully.\n\n' +
+                        'May God bless you abundantly for your generosity. 🙏\n\n' +
+                        'We will provide regular updates on Lidiya\'s progress.'
+                    );
+                    // You can add code here to send donation info to your backend/database
+                    // For now, we'll just reload the page
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                });
+            },
+            onError: function(err) {
+                console.error('PayPal Error:', err);
+                alert(
+                    '❌ Sorry, an error occurred while processing your payment.\n\n' +
+                    'Please try again or contact us if the problem persists.'
+                );
+            },
+            onCancel: function(data) {
+                alert('Donation cancelled. Thank you for your kind intention! 🙏');
+            }
+        }).render('#paypal-button-container');
+        // Share Functions
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Help support baby Lidiya Safira Miyuki with her care and future surgeries. Every voluntary contribution counts! 🙏');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank', 'width=600,height=400');
+        }
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Support Lidiya Safira Miyuki\'s journey with cleft lip care. Voluntary help appreciated! 🙏💝');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+        }
+        function shareOnWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(
+                '*Smile for Lidiya* 🙏\n\n' +
+                'This sweet baby needs support for accommodations, care, and future surgeries.\n\n' +
+                'Every voluntary donation makes a difference.\n\n' +
+                'Support link:'
+            );
+            window.open(`https->wa.me/?text=${text}%20${url}`, '_blank');
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('✅ Link copied successfully!\n\nYou can now share it with friends and family.');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = window.location.href;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('✅ Link copied successfully!');
+            });
+        }
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            initIndicators();
+            startAutoPlay();
+            
+            // Animate progress bar
+            setTimeout(() => {
+                document.getElementById('progressFill').style.width = '0%';
+            }, 100);
+            // Select default preset button ($50)
+            const defaultBtn = document.querySelector('.preset-btn[data-amount="50"]');
+            if (defaultBtn) {
+                defaultBtn.classList.add('selected');
+            }
+        });
+        // Pause autoplay on hover
+        const gallery = document.querySelector('.image-gallery');
+        gallery.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+        gallery.addEventListener('mouseleave', startAutoPlay);
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
