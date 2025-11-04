@@ -143,7 +143,6 @@
             pointer-events: none;
         }
         
-        /* Kelas "hidden" diganti namanya agar lebih jelas */
         .gallery-image-container.hide {
             opacity: 0;
             transform: scale(0.6);
@@ -225,11 +224,10 @@
         }
         
         .gallery-progress-fill.active {
-            /* Durasi (5s) harus SAMA dengan autoplayDelay di JavaScript */
             animation: fillProgressBar 5s linear;
         }
 
-        /* ... Sisa CSS (progress donasi, tombol, dll) ... */
+        /* ... CSS Lainnya ... */
         .progress-bar-container {
             margin: 5px 0;
         }
@@ -495,6 +493,38 @@
             align-items: center;
             gap: 8px;
         }
+
+        .transparency-box {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 12px;
+        }
+        .transparency-box h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .transparency-box p {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+        .transparency-box .contact-info {
+            background: #ffffff;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .transparency-box .contact-info a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .transparency-box .contact-info a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -554,7 +584,7 @@
                     
                     <h3 style="color: #667eea; margin-top: 40px; margin-bottom: 15px;">Why We Need Support</h3>
                     
-                    <p>Lidiya has already undergone her first surgery (labiocheiloplasty - cleft lip repair), and we are heading toward the second (palatoplasty - cleft palate repair). After the second surgery, future procedures—such as a third or fourth surgery that may be needed as she grows—will not be covered by insurance and must be paid out-of-pocket.</p>
+                    <p>Lidiya has already undergone her first surgery (labiocheiloplasty - cleft lip repair), and we are heading toward the second (palatoplasty - cleft palate repair). After the second surgery, future procedures (such as a third or fourth surgery that may be needed as she grows) will not be covered by insurance and must be paid out-of-pocket.</p>
                     <p>This campaign is not to force or pressure anyone into donating; it's entirely voluntary. Any help is appreciated from the heart. The funds will primarily go toward:</p>
                     <ul style="margin: 20px 0 20px 30px; line-height: 2;">
                         <li>Accommodations during hospital stays</li>
@@ -607,8 +637,21 @@
                         <li>Keeping Lidiya in your thoughts and prayers</li>
                         <li>Helping find job opportunities or online freelance work, such as data entry, for the family</li>
                     </ul>
-                    <p>If anyone can assist with job leads or remote freelance opportunities like data input or similar tasks, please reach out—we'd be grateful.</p>
                     
+                    <p>If anyone can assist with job leads or remote freelance opportunities like data input or similar tasks, please reach out. We would be very grateful.</p>
+                    <div class="transparency-box">
+                        <h3>Why I Created This Donation Page Myself</h3>
+                        <p>Many people have asked why I didn’t use popular charity platforms such as Give.Asia, GoFundMe, or other international fundraising websites. The reason is simple: most of these platforms do not support Indonesia or require verification methods that are unavailable in my country. Because of this limitation, it’s very difficult for Indonesian families like ours to create campaigns on those websites.</p>
+                        <p>So, I decided to create this donation page myself to make it easier for anyone around the world who wants to help my baby, Lidiya Safira Miyuki, receive her much-needed cleft lip and palate surgery.</p>
+                        <p>This page is personally managed by me, Tias Adiyatna, Lidiya’s father. All donations go directly to help with Lidiya’s medical expenses, which include accommodations, care, routine speech therapy, equipment, future surgeries, follow-up treatment, and hospital care.</p>
+                        <p>I understand that some people might worry about online scams. That’s why I’ve included transparent information, real photos, and direct contact details below. If you need confirmation or have questions, please feel free to contact me directly:</p>
+                        
+                        <div class="contact-info">
+                            📧 <strong>Email:</strong> <a href="mailto:tias.adiyatna@outlook.com">tias.adiyatna@outlook.com</a>
+                        </div>
+                        
+                        <p style="margin-top: 20px; margin-bottom: 0;">Your kindness means the world to us. Thank you so much for helping my daughter get the smile she deserves. 💖</p>
+                    </div>
                     <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 30px; border-radius: 12px; margin: 40px 0; text-align: center;">
                         <p style="font-size: 20px; font-weight: 600; color: #1976d2; margin-bottom: 15px;">✨ Your Support Means Everything ✨</p>
                         <p style="color: #424242;">All funds will be <strong>used directly</strong> for Lidiya's accommodations, care, equipment, and future surgeries. We commit to transparency with regular updates.</p>
@@ -739,20 +782,16 @@
             "https://res.cloudinary.com/dmajhtvmd/image/upload/w_1000,c_scale,f_auto,q_auto/bf5nxydoscbz7wjvgh.jpg"
         ];
         
-        const autoplayDelay = 5000; // 5 detik. SAMAKAN dengan durasi animasi CSS
+        const autoplayDelay = 5000;
         let currentIndex = 0;
-        let autoPlayInterval; // Variabel untuk menyimpan timer
-        let selectedAmount = 10; 
+        let autoPlayInterval;
+        let selectedAmount = 10; // Default $10
 
-        // Ambil elemen-elemen DOM
         const galleryWrapper = document.getElementById('galleryWrapper');
         const galleryIndicators = document.getElementById('galleryIndicators');
         const galleryProgressFill = document.getElementById('galleryProgressFill');
         const gallery = document.getElementById('imageGallery');
 
-        /**
-         * Memperbarui tampilan galeri berdasarkan currentIndex
-         */
         function updateGallery() {
             if (!galleryWrapper || !galleryIndicators) return;
 
@@ -772,7 +811,7 @@
                 } else if (i === (currentIndex + 1) % totalImages) {
                     classType = 'next';
                 } else {
-                    classType = 'hide'; // Ganti nama kelas dari 'hidden'
+                    classType = 'hide';
                 }
                 imgContainer.classList.add(classType);
 
@@ -788,15 +827,11 @@
                     indicator.classList.add('active');
                 }
                 indicator.dataset.index = i;
-                // Menggunakan 'click'
                 indicator.addEventListener('click', () => goToImage(i));
                 galleryIndicators.appendChild(indicator);
             }
         }
 
-        /**
-         * Menghentikan interval autoplay dan animasi progress bar
-         */
         function stopAutoPlay() {
             clearInterval(autoPlayInterval);
             if (galleryProgressFill) {
@@ -805,43 +840,32 @@
             }
         }
 
-        /**
-         * Memulai interval autoplay dan animasi progress bar
-         */
         function startAutoPlay() {
-            stopAutoPlay(); // Selalu hentikan timer lama sebelum memulai yang baru
+            stopAutoPlay(); 
 
-            // Memulai interval baru
             autoPlayInterval = setInterval(() => {
-                // Fungsi yang dijalankan setiap 'autoplayDelay'
                 currentIndex = (currentIndex + 1) % images.length;
                 updateGallery();
-                resetProgressBar(); // Reset bar setelah gambar berganti
+                resetProgressBar(); 
             }, autoplayDelay);
             
-            resetProgressBar(); // Reset bar saat autoplay dimulai
+            resetProgressBar(); 
         }
         
-        /**
-         * Mereset (memulai ulang) animasi CSS pada progress bar
-         */
         function resetProgressBar() {
             if (galleryProgressFill) {
                 galleryProgressFill.classList.remove('active');
-                // Trik untuk memaksa browser memulai ulang animasi CSS
                 void galleryProgressFill.offsetWidth; 
                 galleryProgressFill.classList.add('active');
                 galleryProgressFill.style.animationPlayState = 'running';
             }
         }
 
-        // --- Fungsi untuk Tombol Manual ---
-
         function nextImage() {
-            stopAutoPlay(); // Hentikan autoplay saat diklik manual
+            stopAutoPlay(); 
             currentIndex = (currentIndex + 1) % images.length;
             updateGallery();
-            startAutoPlay(); // Mulai ulang autoplay dari awal
+            startAutoPlay(); 
         }
 
         function prevImage() {
@@ -858,23 +882,20 @@
             startAutoPlay();
         }
 
-        // --- Event Listeners untuk Pause/Resume saat hover ---
         if (gallery) {
             gallery.addEventListener('mouseenter', () => {
-                stopAutoPlay(); // Cukup panggil stopAutoPlay
+                stopAutoPlay();
             });
 
             gallery.addEventListener('mouseleave', () => {
-                startAutoPlay(); // Mulai lagi saat mouse pergi
+                startAutoPlay();
             });
         }
         
-        // --- Inisialisasi Saat Halaman Dimuat ---
         window.addEventListener('load', () => {
-            updateGallery(); // 1. Buat galeri
-            startAutoPlay(); // 2. Langsung mulai autoplay
+            updateGallery(); 
+            startAutoPlay(); 
             
-            // Logika untuk progress bar donasi
             setTimeout(() => {
                 const progressFill = document.getElementById('progressFill');
                 if (progressFill) {
@@ -882,14 +903,12 @@
                 }
             }, 100);
 
-            // Pilih tombol donasi default
+            // Memilih default $10
             const defaultBtn = document.querySelector('.preset-btn[data-amount="10"]');
             if (defaultBtn) {
                 defaultBtn.classList.add('selected');
             }
         });
-
-        // === Sisa JavaScript (Donasi, Share, dll) - TIDAK BERUBAH ===
 
         // Preset amount buttons
         document.querySelectorAll('.preset-btn').forEach(btn => {
@@ -920,6 +939,7 @@
                 height: 45
             },
             createOrder: function(data, actions) {
+                // Memastikan ada nilai fallback jika selectedAmount = null
                 const amount = selectedAmount || 10; 
                 return actions.order.create({
                     purchase_units: [{
